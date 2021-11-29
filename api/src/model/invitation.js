@@ -23,6 +23,16 @@ const invitationSchema = new mongoose.Schema({
         required: true,
         default: false
     },
+    emailSent: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    smsSent: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
     dateCreated: {
         type: Date,
         required: true,

@@ -16,9 +16,10 @@ router.get("/", async (req, res) => {
 });
 
 // This router will return an invitation that the user will have to accept or no and it will have a uuid param generated randomly in invitation submition.
-router.get("/:uuid", (req, res) => {
+router.get("/:uuid", async (req, res) => {
     const uuid = req.params.uuid;
-    res.send("API is working properly with uuid : " + uuid);
+    const invitation = await Invitation.find({ uuid: { $in: [uuid] } });
+    res.json(invitation);
 });
 
 
@@ -26,20 +27,33 @@ router.get("/:uuid", (req, res) => {
 router.post("/", async (req, res) => {
 
     try {
-        await Promise.all(req.body?.map(async (element) => {
-            const invitation = new Invitation({
+
+        const invites = req.body?.map(element => {
+            if (!element.email & !element.mobile) {
+                return res.status(400).send({ message: "'email' & 'mobile' shouldn't be empty" });
+            }
+            return {
                 uuid: uuidv4(),
                 lastName: element?.lastName,
                 email: element?.email,
                 mobile: element?.mobile
-            });
+            }
+        });
 
-            await invitation.save(invitation);
-            
-            //TODO send email
-            //TODO send sms
+        const savedInvites = await Invitation.bulkWrite(
+            invites.map((invite) =>
+            ({
+                updateOne: {
+                    filter: { email: invite.email, mobile: invite.mobile },
+                    update: invite,
+                    upsert: true
+                }
+            })
+            )
+        )
+        // TODO send email
+        // TODO send sms
 
-        }));
         res.status(200).json({ message: "Invitations sent successfully" });
     } catch (error) {
         if (error.name === "ValidationError") {
@@ -55,7 +69,7 @@ router.post("/", async (req, res) => {
     }
 });
 
-// This router will update an invitation
+// This router will update an invitation - register
 
 // This router will delete an invitation
 
