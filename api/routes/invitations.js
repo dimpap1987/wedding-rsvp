@@ -58,13 +58,25 @@ router.post("/", async (req, res) => {
         if (savedInvites?.result?.ok === 1) {
 
             // send email
-            const emailListAsList = invites.map(element => element.email).join(',');
+            const emails = invites.map(element => element.email);
+            const emailListAsList = emails.join(',');
+
             if (emailListAsList) {
-                mailService.sendEmail(emailListAsList);
+                await mailService.sendEmail(emailListAsList).then(() => {
+                    emails.map((mail) => {
+                        Invitation.findOne({ email: mail }, function (err, invitation) {
+                            if (!err) {
+                                invitation.emailSent = true;
+                                invitation.save();
+                            }
+                        });
+                    })
+                });
+
             }
 
             // TODO send sms
-            
+
         }
 
         res.status(200).json({ message: "Invitations sent successfully" });
