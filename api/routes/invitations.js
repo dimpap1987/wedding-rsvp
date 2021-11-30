@@ -1,4 +1,6 @@
 var express = require("express");
+const mailService = require('../src/service/mailService');
+
 var router = express.Router();
 const Invitation = require('../src/model/invitation');
 const { v4: uuidv4 } = require('uuid');
@@ -52,6 +54,7 @@ router.post("/", async (req, res) => {
             )
         )
         // TODO send email
+        mailService.sendEmail('mits0s200efta@gmail.com');
         // TODO send sms
 
         res.status(200).json({ message: "Invitations sent successfully" });
