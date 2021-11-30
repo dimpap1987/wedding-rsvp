@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
     port: 587,
     auth: {
         user: process.env.EMAIL_ADDRESS,
-        pass: 'pana8a13',
+        pass: process.env.EMAIL_PASS
     },
 });;
 
@@ -19,7 +19,7 @@ sendEmail = (to) => {
     transporter.sendMail({
         from: process.env.EMAIL_ADDRESS, // sender address
         to: to, // list of receivers
-        subject: "Medium @edigleyssonsilva ✔", // Subject line
+        subject: "Subject ✔", // Subject line
         text: "There is a new article. It's about sending emails, check it out!", // plain text body
         html: "<b>There is a new article. It's about sending emails, check it out!</b>", // html body
     }).then(info => {

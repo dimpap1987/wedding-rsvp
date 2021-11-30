@@ -53,9 +53,19 @@ router.post("/", async (req, res) => {
             })
             )
         )
-        // TODO send email
-        mailService.sendEmail('mits0s200efta@gmail.com');
-        // TODO send sms
+
+        // if successfully saved in db
+        if (savedInvites?.result?.ok === 1) {
+
+            // send email
+            const emailListAsList = invites.map(element => element.email).join(',');
+            if (emailListAsList) {
+                mailService.sendEmail(emailListAsList);
+            }
+
+            // TODO send sms
+            
+        }
 
         res.status(200).json({ message: "Invitations sent successfully" });
     } catch (error) {
