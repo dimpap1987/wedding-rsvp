@@ -7,12 +7,16 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SpinnerComponent } from './components/loader/spinner/spinner.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+import { PanelComponent } from './components/panel/panel.component';
+import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
+    PanelComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,9 +24,10 @@ import { HttpClientModule } from '@angular/common/http';
     MatProgressSpinnerModule,
     MatDialogModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

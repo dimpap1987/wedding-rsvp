@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './services/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { SpinnerComponent } from './components/loader/spinner/spinner.component';
 import { LoadingService } from './services/loading.service';
 
 @Component({
@@ -9,12 +10,18 @@ import { LoadingService } from './services/loading.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private loadingService: LoadingService,
-    private api: ApiService) { }
+  constructor(public loadingService: LoadingService,
+    private dialog: MatDialog) { }
+
 
   ngOnInit(): void {
-    this.loadingService.load();
-    this.api.getInvitations().subscribe(console.log);
+    this.loadingService.isLoading.subscribe(res => {
+      if (res) {
+        this.dialog.open(SpinnerComponent);
+      } else {
+        this.dialog.closeAll();
+      }
+    })
   }
 
 }

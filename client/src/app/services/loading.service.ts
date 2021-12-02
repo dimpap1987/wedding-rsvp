@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { SpinnerComponent } from '../components/loader/spinner/spinner.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoadingService {
 
-  constructor(private dialog: MatDialog) { }
-
-  load() {
-    this.dialog.open(SpinnerComponent);
-  }
+  public isLoading = new BehaviorSubject<boolean>(true);
 }
