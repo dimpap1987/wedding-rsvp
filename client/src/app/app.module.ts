@@ -11,6 +11,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { PanelComponent } from './components/panel/panel.component';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
+import {MatTableModule} from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
     MatDialogModule,
     NgbModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatTableModule,
+    MatCheckboxModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]
