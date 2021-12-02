@@ -1,10 +1,8 @@
 var express = require("express");
 const mailService = require('../src/service/mailService');
-
 var router = express.Router();
 const Invitation = require('../src/model/invitation');
 const { v4: uuidv4 } = require('uuid');
-
 
 
 // This router will fetch all the invitations
@@ -13,6 +11,7 @@ router.get("/", async (req, res) => {
         const invitations = await Invitation.find();
         res.json(invitations);
     } catch (error) {
+        console.error(error)
         res.status(500).json({ message: "Sorry something went wrong while fetching invitations" });
     }
 });
@@ -25,14 +24,13 @@ router.get("/:uuid", async (req, res) => {
 });
 
 
-// This router will submit a list of invitations - send emails/sms
+// This router will submit a list of invitations
 router.post("/", async (req, res) => {
 
     try {
-
         const invites = req.body?.map(element => {
             if (!element.email & !element.mobile) {
-                return res.status(400).send({ message: "'email' & 'mobile' shouldn't be empty" });
+                return res.status(400).send({ message: "You should provide 'email' or 'mobile'" });
             }
             return {
                 uuid: uuidv4(),
@@ -42,7 +40,7 @@ router.post("/", async (req, res) => {
             }
         });
 
-        const savedInvites = await Invitation.bulkWrite(
+        await Invitation.bulkWrite(
             invites.map((invite) =>
             ({
                 updateOne: {
@@ -53,34 +51,10 @@ router.post("/", async (req, res) => {
             })
             )
         )
+        res.status(200).json({ message: "Invitations saved successfully" });
 
-        // if successfully saved in db
-        if (savedInvites?.result?.ok === 1) {
-
-            // send email
-            const emails = invites.map(element => element.email);
-            const emailListAsList = emails.join(',');
-
-            if (emailListAsList) {
-                await mailService.sendEmail(emailListAsList).then(() => {
-                    emails.map((mail) => {
-                        Invitation.findOne({ email: mail }, function (err, invitation) {
-                            if (!err) {
-                                invitation.emailSent = true;
-                                invitation.save();
-                            }
-                        });
-                    })
-                });
-
-            }
-
-            // TODO send sms
-
-        }
-
-        res.status(200).json({ message: "Invitations sent successfully" });
     } catch (error) {
+        console.error(error)
         if (error.name === "ValidationError") {
             let errors = {};
 
@@ -88,15 +62,61 @@ router.post("/", async (req, res) => {
                 errors[key] = error.errors[key].message;
             });
 
-            return res.status(400).send(errors);
+             res.status(400).send(errors);
         }
         res.status(500).json({ message: "Something went wrong" });
     }
 });
 
+// This router will sent emails - input list of emails
+router.post("/email/submit", async (req, res) => {
+    try {
+        const emails = req.body;
+        // Validate if its a list of emails
+        const emailListAsList = emails?.join(',');
+
+        if (emailListAsList) {
+            await mailService.sendEmail(emailListAsList).then(() => {
+                emails.map((mail) => {
+                    Invitation.findOne({ email: mail }, function (err, invitation) {
+                        if (!err) {
+                            invitation.emailSent = true;
+                            invitation.save();
+                        }
+                    });
+                })
+                res.status(200).json({ message: "Invitations saved successfully" });
+            });
+        }
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
+
+
 // This router will update an invitation - register
+router.put("/:id", async (req, res) => {
 
-// This router will delete an invitation
+    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, req.body, { new: true },
 
+        (err, invitation) => {
+            if (!err) {
+                res.json(invitation);
+            }
+        });
+    res.status(500).json({ message: "Something went wrong" })
+});
+
+// This router will delete mutiple invitations
+router.delete("/", async (req, res) => {
+    await Invitation.deleteMany({ '_id': { $in: req.body } },
+        (err) => {
+            if (!err) {
+                res.json({ message: "Successfully deleted" });
+            }
+        });
+    res.status(500).json({ message: "Something went wrong" });
+});
 
 module.exports = router;
