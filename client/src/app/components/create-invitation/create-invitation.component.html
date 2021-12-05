@@ -1,0 +1,42 @@
+<mat-dialog-content>
+    <form [formGroup]="_form" autocomplete="off" novalidate>
+        <table>
+            <tbody formArrayName="data">
+                <tr *ngFor="let array of getDataControl; index as i" [formGroupName]="i">
+                    <td>
+                        <mat-form-field class="form-element pr-2">
+                            <input matInput placeholder="name" formControlName="lastName">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="form-element pr-2">
+                            <input matInput placeholder="email" formControlName="email" (keyup.enter)="_addRow()">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="form-element pr-2">
+                            <input matInput placeholder="phone number" formControlName="mobile"
+                                (keyup.enter)="_addRow()">
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <button (click)="_removeRow(i)" type="button" mat-mini-fab color="warn"><mat-icon>close</mat-icon></button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td class="">
+                        <button mat-icon-button color="primary" aria-label="New invitation" (click)="_addRow()">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                        <button *ngIf="_form.value.data?.length > 0" mat-icon-button color="primary" aria-label="New invitation" (click)="onSubmit()">
+                            <mat-icon style="color: green;">check</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+</mat-dialog-content>

@@ -1,6 +1,6 @@
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,13 +14,17 @@ import { AppComponent } from './app.component';
 import { SpinnerComponent } from './components/loader/spinner/spinner.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
-
+import { CreateInvitationComponent } from './components/create-invitation/create-invitation.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
     AppComponent,
     SpinnerComponent,
     PanelComponent,
+    CreateInvitationComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,10 @@ import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
     MatTableModule,
     MatCheckboxModule,
     MatIconModule,
-    FormsModule
+    MatButtonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]

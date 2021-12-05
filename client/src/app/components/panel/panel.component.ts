@@ -1,8 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { CreateInvitationComponent } from '../create-invitation/create-invitation.component';
 
 @Component({
   selector: 'app-panel',
@@ -17,16 +19,11 @@ export class PanelComponent implements OnInit {
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.api.getInvitations().subscribe(response => {
-      this.invitations = response;
-      console.log(this.invitations);
-      this.dataSource = new MatTableDataSource<Invintation>(this.invitations);
-    });
+    this.fetchInvitation();
   }
-
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -39,5 +36,16 @@ export class PanelComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  addNewInvitation() {
+    this.dialog.open(CreateInvitationComponent).afterClosed().subscribe(() => this.fetchInvitation());
+  }
+
+  fetchInvitation() {
+    this.api.getInvitations().subscribe(response => {
+      this.invitations = response;
+      this.dataSource = new MatTableDataSource<Invintation>(this.invitations);
+    });
   }
 }
