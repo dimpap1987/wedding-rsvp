@@ -9,4 +9,5 @@ export interface Invintation {
   smsSent: boolean;
   dateCreated: string;
   dateAccepted: string;
+  completed: boolean;
 }
