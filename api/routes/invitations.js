@@ -109,19 +109,23 @@ router.delete("/", async (req, res) => {
         (err) => {
             if (!err) {
                 res.json({ message: "Successfully deleted" });
+            } else {
+                res.status(500).json({ message: "Something went wrong" });
             }
-        });
-    res.status(500).json({ message: "Something went wrong" });
+        }).clone().catch(function (err) { console.log(err) });;
 });
 
 router.put("/register/:id", async (req, res) => {
-    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, { registered: req.body?.registered }, { new: true },
 
+    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, { registered: req.body?.registered }, { new: true },
         (err, invitation) => {
             if (!err) {
                 res.json(invitation);
+            } else {
+                res.status(500).json({ message: "Something went wrong" })
             }
-        });
-    res.status(500).json({ message: "Something went wrong" })
+        }).clone().catch(function (err) { console.log(err) });
 });
+
+
 module.exports = router;

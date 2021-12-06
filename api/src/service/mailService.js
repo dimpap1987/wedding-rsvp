@@ -1,4 +1,7 @@
 const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars');
+const path = require('path')
+
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
@@ -10,9 +13,19 @@ const transporter = nodemailer.createTransport({
     },
 });;
 
+transporter.use('compile', hbs({
+    viewEngine: {
+        extName: '.hbs',
+        partialsDir: 'views',//your path, views is a folder inside the source folder
+        layoutsDir: 'views',
+        defaultLayout: ''//set this one empty and provide your template below,
+    },
+    viewPath: 'views'
+}));
 
 // `to` is a string with comma seperated values
 sendEmail = (invitation) => {
+
     return new Promise((resolve, reject) => {
         transporter.verify().then(console.log('Successfully connected to gmail')).catch(console.error);
 
@@ -20,8 +33,10 @@ sendEmail = (invitation) => {
             from: process.env.EMAIL_ADDRESS, // sender address
             to: invitation.email, // list of receivers
             subject: "Subject ✔", // Subject line
-            text: "There is a new article. It's about sending emails, check it out!", // plain text body
-            html: "<b>There is a new article. It's about sending emails, check it out!</b>", // html body
+            template: 'emailTemplate',
+            context: {
+                link: process.env.EMAIL_URL + invitation.uuid
+            }
         }).then(info => {
             console.log(`Email sent successfully to : '${invitation.email}'`);
             resolve(true);
