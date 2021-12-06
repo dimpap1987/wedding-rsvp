@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
@@ -19,7 +20,7 @@ export class PanelComponent implements OnInit {
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
 
-  constructor(private api: ApiService, private dialog: MatDialog) { }
+  constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.fetchInvitation();
@@ -53,8 +54,9 @@ export class PanelComponent implements OnInit {
     const ids = this.selection.selected.map(s => s._id);
     if (ids) {
       this.api.sendEmails(ids as string[]).subscribe(() => {
-        console.log("emails sent successfully")
-        this.fetchInvitation()});
+        this.snackBar.open("Email succeessfully sent", "Close", { duration: 2000 })
+        this.fetchInvitation()
+      });
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -15,7 +16,7 @@ export class CreateInvitationComponent implements OnInit {
   _form: FormGroup;
   invitations: Invintation[] = [];
 
-  constructor(private _fb: FormBuilder, private api: ApiService) {
+  constructor(private _fb: FormBuilder, private api: ApiService, private snackBar: MatSnackBar) {
 
     this._form = this._fb.group({
       data: this._fb.array([
@@ -36,8 +37,8 @@ export class CreateInvitationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.api.saveInvitation(this._form.value.data).subscribe(()=>{
-
+    this.api.saveInvitation(this._form.value.data).subscribe(() => {
+      this.snackBar.open("Succeessfully saved", "Close", { duration: 2000 })
     });
   }
 
