@@ -15,13 +15,13 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.loadingService.isLoading.subscribe(res => {
-      if (res) {
-        this.dialog.open(SpinnerComponent);
-      } else {
-        this.dialog.closeAll();
-      }
-    })
+    // this.loadingService.isLoading.subscribe(res => {
+    //   if (res) {
+    //     this.dialog.open(SpinnerComponent);
+    //   } else {
+    //     this.dialog.closeAll();
+    //   }
+    // })
   }
 
 }

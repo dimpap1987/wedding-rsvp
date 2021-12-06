@@ -48,4 +48,13 @@ export class PanelComponent implements OnInit {
       this.dataSource = new MatTableDataSource<Invintation>(this.invitations);
     });
   }
+
+  sendEmailsToListOfUsers() {
+    const ids = this.selection.selected.map(s => s._id);
+    if (ids) {
+      this.api.sendEmails(ids as string[]).subscribe(() => {
+        console.log("emails sent successfully")
+        this.fetchInvitation()});
+    }
+  }
 }

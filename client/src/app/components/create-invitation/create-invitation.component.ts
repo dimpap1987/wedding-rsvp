@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';

@@ -18,6 +18,9 @@ import { CreateInvitationComponent } from './components/create-invitation/create
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { HomeComponent } from './components/home/home.component';
+import { AcceptInvitationComponent } from './components/accept-invitation/accept-invitation.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,8 @@ import { MatInputModule } from '@angular/material/input';
     SpinnerComponent,
     PanelComponent,
     CreateInvitationComponent,
+    HomeComponent,
+    AcceptInvitationComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTooltipModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]

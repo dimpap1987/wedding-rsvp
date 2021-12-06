@@ -4,3 +4,14 @@
     box-shadow: none;
     background: rgba(0, 0, 0, 0.0);
 }
+
+.mat-tooltip {
+    position: relative !important;
+    top:-15px!important;
+    left: 20px;
+    font-size: 12px!important; 
+    padding: 4px!important;
+    background-color: rgb(86, 86, 94)!important;
+    padding-left: 8px!important;
+    padding-right: 8px!important;
+}   

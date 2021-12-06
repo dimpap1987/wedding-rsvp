@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 router.get("/:uuid", async (req, res) => {
     const uuid = req.params.uuid;
     const invitation = await Invitation.find({ uuid: { $in: [uuid] } });
-    res.json(invitation);
+    res.json(invitation[0]);
 });
 
 
@@ -62,32 +62,27 @@ router.post("/", async (req, res) => {
                 errors[key] = error.errors[key].message;
             });
 
-             res.status(400).send(errors);
+            res.status(400).send(errors);
         }
         res.status(500).json({ message: "Something went wrong" });
     }
 });
 
-// This router will sent emails - input list of emails
+// This router will send emails - input list of emails
 router.post("/email/submit", async (req, res) => {
     try {
-        const emails = req.body;
-        // Validate if its a list of emails
-        const emailListAsList = emails?.join(',');
+        let invitations = await Invitation.find().where('_id').in(req.body).exec();
 
-        if (emailListAsList) {
-            await mailService.sendEmail(emailListAsList).then(() => {
-                emails.map((mail) => {
-                    Invitation.findOne({ email: mail }, function (err, invitation) {
-                        if (!err) {
-                            invitation.emailSent = true;
-                            invitation.save();
-                        }
-                    });
-                })
-                res.status(200).json({ message: "Invitations saved successfully" });
+        Promise.all(invitations.map(async (invite) => {
+            await mailService.sendEmail(invite).then(async (result) => {
+                if (!result) return;
+                await Invitation.findByIdAndUpdate({ '_id': invite._id }, { emailSent: true }, { new: true })
             });
-        }
+        })).then(() => {
+            res.status(200).json({ message: "Invitations saved successfully" });
+        });
+
+
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: "Something went wrong" });
@@ -119,4 +114,14 @@ router.delete("/", async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
 });
 
+router.put("/register/:id", async (req, res) => {
+    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, { registered: req.body?.registered }, { new: true },
+
+        (err, invitation) => {
+            if (!err) {
+                res.json(invitation);
+            }
+        });
+    res.status(500).json({ message: "Something went wrong" })
+});
 module.exports = router;

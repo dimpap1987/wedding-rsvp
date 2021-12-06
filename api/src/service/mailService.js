@@ -12,19 +12,18 @@ const transporter = nodemailer.createTransport({
 
 
 // `to` is a string with comma seperated values
-sendEmail = (to) => {
-
+sendEmail = (invitation) => {
     return new Promise((resolve, reject) => {
         transporter.verify().then(console.log('Successfully connected to gmail')).catch(console.error);
 
         transporter.sendMail({
             from: process.env.EMAIL_ADDRESS, // sender address
-            to: to, // list of receivers
+            to: invitation.email, // list of receivers
             subject: "Subject ✔", // Subject line
             text: "There is a new article. It's about sending emails, check it out!", // plain text body
             html: "<b>There is a new article. It's about sending emails, check it out!</b>", // html body
         }).then(info => {
-            console.log(`Email sent successfully to : '${to}'`);
+            console.log(`Email sent successfully to : '${invitation.email}'`);
             resolve(true);
         }).catch(error => {
             console.error(error);

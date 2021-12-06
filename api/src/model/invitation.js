@@ -18,7 +18,7 @@ const invitationSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    accepted: {
+    registered: {
         type: Boolean,
         required: true,
         default: false
