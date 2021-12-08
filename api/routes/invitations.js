@@ -28,10 +28,7 @@ router.get("/:uuid", async (req, res) => {
 router.post("/", async (req, res) => {
 
     try {
-        const invites = req.body?.map(element => {
-            if (!element.email & !element.mobile) {
-                return res.status(400).send({ message: "You should provide 'email' or 'mobile'" });
-            }
+        const invites = req.body?.filter(element => element.email || element.mobile).map(element => {
             return {
                 uuid: uuidv4(),
                 lastName: element?.lastName,
@@ -39,6 +36,10 @@ router.post("/", async (req, res) => {
                 mobile: element?.mobile
             }
         });
+
+        if (invites.length == 0) {
+            res.status(404).json({ message: "No invitations found" });
+        }
 
         await Invitation.bulkWrite(
             invites.map((invite) =>

@@ -41,10 +41,15 @@ export class CreateInvitationComponent implements OnInit {
   }
 
   onSubmit() {
-    this.api.saveInvitation(this._form.value.data).subscribe(() => {
+
+    const data = this._form.value.data;
+    
+    // TODO validate email and phone number
+
+    this.api.saveInvitation(data).subscribe(() => {
       this.snackBar.open("Succeessfully saved", "Close", { duration: 2000 });
       this.dialog.closeAll();
-    });
+    }, e => this.snackBar.open(e.error?.message, "Close", { duration: 4000 }));
   }
 
   _addRow() {
