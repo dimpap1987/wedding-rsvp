@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-center align-items-center login-wrapper">
+    <mat-card>
+        <form class="d-flex flex-column" [formGroup]="loginForm" autocomplete="off" (ngSubmit)="login()">
+
+            <mat-form-field appearance="outline">
+                <mat-label class="d-flex justify-content-start align-items-center">
+                    <div>
+                        <mat-icon> person_pin</mat-icon>
+                    </div>
+                    <div class="ml-1">username</div>
+                </mat-label>
+                <input type="text" matInput formControlName="username" placeholder="username">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label class="d-flex justify-content-start align-items-center">
+                    <div>
+                        <mat-icon>lock</mat-icon>
+                    </div>
+                    <div class="ml-1">password</div>
+                </mat-label>
+                <input type="password" matInput formControlName="password" placeholder="password">
+            </mat-form-field>
+
+            <button class="mt-2" mat-raised-button color="primary">Login</button>
+        </form>
+    </mat-card>
+</div>

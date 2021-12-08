@@ -38,4 +38,8 @@ export class ApiService {
   registerInvitation(id: string, registered: boolean): Observable<any> {
     return this.http.put(`${environment.baseUrl}invitations/register/${id}`, { registered: registered });
   }
+
+  login(data: any): Observable<any> {
+    return this.http.post(`${environment.baseUrl}login`, data);
+  }
 }

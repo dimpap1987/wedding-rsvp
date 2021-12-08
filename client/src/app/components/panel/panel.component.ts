@@ -19,8 +19,11 @@ export class PanelComponent implements OnInit {
 
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
-
-  constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  isLoggedIn: boolean;
+  
+  constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) {
+    this.isLoggedIn = false;
+   }
 
   ngOnInit(): void {
     this.fetchInvitation();

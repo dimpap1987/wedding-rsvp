@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { PanelComponent } from './components/panel/panel.component';
-import { HomeComponent } from './components/home/home.component';
 import { AcceptInvitationComponent } from './components/accept-invitation/accept-invitation.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { PanelComponent } from './components/panel/panel.component';
+import { AuthGuardService } from './guard/auth-guard.service';
 
 
 const routes: Routes = [
-  { path: 'panel', component:  PanelComponent},
-  { path: 'invitation/:uuid', component:  AcceptInvitationComponent},
-  { path: '**', component:  HomeComponent}
+  { path: 'panel', component: PanelComponent, canActivate: [AuthGuardService] },
+  { path: 'login', component: LoginComponent },
+  { path: 'invitation/:uuid', component: AcceptInvitationComponent },
+  { path: '**', component: HomeComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

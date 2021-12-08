@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const authService = require('../src/service/authService')
 
-router.get('/login', function (req, res, next) {
+router.post('/login', function (req, res, next) {
   const username = req.body?.username;
   const password = req.body?.password;
 
