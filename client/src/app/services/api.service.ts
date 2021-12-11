@@ -32,7 +32,7 @@ export class ApiService {
   }
 
   findInvitationByUUID(uuid: string): Observable<any> {
-    return this.http.get(`${environment.baseUrl}invitations/${uuid}`);
+    return this.http.get(`${environment.baseUrl}invitations/token/${uuid}`);
   }
 
   registerInvitation(id: string, registered: boolean): Observable<any> {

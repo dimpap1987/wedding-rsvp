@@ -25,7 +25,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  if (req.path == '/login') {
+
+  if (req.path == '/login' || req.path.includes('invitations/token') || req.path.includes('invitations/register')) {
     next();
   } else {
     const isAuthorized = authService.authorizeRequest(req);

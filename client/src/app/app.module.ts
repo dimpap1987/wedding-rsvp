@@ -26,6 +26,10 @@ import { LoginComponent } from './components/login/login.component';
 import { PanelComponent } from './components/panel/panel.component';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { CountDownComponent } from './components/count-down/count-down.component';
+import { WeddingComponent } from './components/wedding/wedding.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     AcceptInvitationComponent,
     LoginComponent,
     NavbarComponent,
+    CountDownComponent,
+    WeddingComponent,
+    ButtonComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +63,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MatTooltipModule,
     MatSnackBarModule,
     MatCardModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSidenavModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]

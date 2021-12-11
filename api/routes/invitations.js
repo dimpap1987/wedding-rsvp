@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // This router will return an invitation that the user will have to accept or no and it will have a uuid param generated randomly in invitation submition.
-router.get("/:uuid", async (req, res) => {
+router.get("/token/:uuid", async (req, res) => {
     const uuid = req.params.uuid;
     const invitation = await Invitation.find({ uuid: { $in: [uuid] } });
     res.json(invitation[0]);

@@ -1,28 +1,17 @@
-<div class="d-flex justify-content-center align-items-center registration-container">
-    <div>
-        <div class="d-flex justify-content-center">
-            <h1> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quisquam ullam libero modi repellendus
-                corrupti minus praesentium quas recusandae necessitatibus tempore corporis laborum error vero dolores,
-                atque eos esse! Distinctio, voluptatum! </h1>
+<app-wedding>
+    <div class="d-flex justify-content-center">
+        <div *ngIf="!invitation.registered">
+            <app-button [text]="'Register'" (click)="register(true)"></app-button>
         </div>
-        <div class="d-flex justify-content-center">
-            <div *ngIf="!invitation.registered">
-                <button class="register-button" mat-raised-button color="primary"
-                    (click)="register(true)">Register
-                </button>
-            </div>
 
-            <div *ngIf="invitation.registered">
-                <div class="d-flex justify-content-center">
-                    <h2>See you soon</h2>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <button style="font-size: 12px;" class="register-button" mat-stroked-button color="primary"
-                    (click)="register(false)">Unregister
-                </button>
-                </div>
+        <div *ngIf="invitation.registered">
+            <div class="d-flex justify-content-center">
+                <h2>See you soon</h2>
             </div>
-
+            <div class="d-flex justify-content-center">
+                <app-button [text]="'Unregister'" (click)="register(false)"></app-button>
+            </div>
         </div>
+
     </div>
-</div>
+</app-wedding>

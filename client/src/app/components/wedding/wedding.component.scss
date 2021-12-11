@@ -1,0 +1,33 @@
+.wedding-container {
+    background: url(https://thumbs.dreamstime.com/b/roses-golden-rings-white-wood-wedding-background-golden-wedding-rings-pink-roses-white-rustic-wood-top-view-marriage-114222724.jpg)
+        no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    height: 100%;
+    font-family: "Brush Script MT", cursive !important;
+    position: relative;
+    width: 100%;
+}
+
+.nikosGiota {
+    // position: absolute;
+    font-size: 60px;
+    color: rgb(95, 93, 93);
+    padding: 1vw;
+    // top: 8vh;
+    // left: 14vw;
+}
+
+.date {
+    padding: 2vw;
+    font-size: 20px;
+}
+
+.main-paragraph {
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
