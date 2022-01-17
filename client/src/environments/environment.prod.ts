@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl:'http://localhost:9000/'
+  baseUrl:'https://wedding-api-b4qzkl4vrq-uc.a.run.app/'
 };

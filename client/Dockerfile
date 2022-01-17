@@ -1,4 +1,4 @@
-# Stage 0 - Build Frontend Assets
+# Stage 1 - Build Frontend Assets
 FROM node:16-alpine3.14 as build
 
 WORKDIR /usr/local/app
@@ -7,7 +7,8 @@ COPY . /usr/local/app/
 RUN npm install
 RUN npm run build
 
-# Stage 1
+
+# Stage 2 - NGINX
 FROM fholzer/nginx-brotli:v1.12.2
 
 WORKDIR /etc/nginx
