@@ -7,7 +7,7 @@ COPY . /usr/local/app/
 RUN npm install
 RUN npm run build
 
-# Stage 1 - Serve Frontend Assets
+# Stage 1
 FROM fholzer/nginx-brotli:v1.12.2
 
 WORKDIR /etc/nginx
