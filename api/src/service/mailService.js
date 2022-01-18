@@ -5,8 +5,11 @@ const hbs = require('nodemailer-express-handlebars');
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
+    service: 'Gmail',
     host: 'smtp.gmail.com',
-    port: 587,
+    port: 587,              // TLS (google requires this port for TLS)
+    secure: false,          // Not SSL
+    requireTLS: true,
     auth: {
         user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASS
