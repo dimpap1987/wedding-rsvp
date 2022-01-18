@@ -15,7 +15,7 @@ import { CreateInvitationComponent } from '../create-invitation/create-invitatio
 export class PanelComponent implements OnInit {
 
   invitations: Invintation[] = [];
-  displayedColumns: string[] = ['select', 'index', 'name', 'mobile', 'email', 'registered', 'emailSent', 'smsSent'];
+  displayedColumns: string[] = ['select', 'index', 'name',  'email', 'registered', 'emailSent'];
 
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
