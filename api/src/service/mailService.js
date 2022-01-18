@@ -1,18 +1,28 @@
 const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
 const hbs = require('nodemailer-express-handlebars');
-// const path = require('path')
+const OAuth2 = google.auth.OAuth2;
 
 require('dotenv').config();
 
+const  oauth_client = new OAuth2(process.env.CLIENT_ID, process.env.SECRET_KEY);
+oauth_client.setCredentials({ refresh_token : process.env.REFRESH_TOKEN});
+
+
 const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    host: 'smtp.gmail.com',
-    port: 587,              // TLS (google requires this port for TLS)
-    secure: false,          // Not SSL
-    requireTLS: true,
+    service: 'gmail',
+    // host: 'smtp.gmail.com',
+    // port: 587,              // TLS (google requires this port for TLS)
+    // secure: false,          // Not SSL
+    // requireTLS: true,
     auth: {
+        type:'OAuth2',
         user: process.env.EMAIL_ADDRESS,
-        pass: process.env.EMAIL_PASS
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.SECRET_KEY,
+        refreshToken: process.env.REFRESH_TOKEN,
+        accessToken: oauth_client.getAccessToken(),
+        // pass: process.env.EMAIL_PASS
     },
 });;
 
