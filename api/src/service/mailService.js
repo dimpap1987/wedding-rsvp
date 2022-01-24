@@ -48,7 +48,7 @@ sendEmail = (invitation) => {
             subject: "Subject ✔", // Subject line
             template: 'emailTemplate',
             context: {
-                link: process.env.EMAIL_URL + invitation.uuid
+                link: process.env.INVITATION_URL + invitation.uuid
             }
         }).then(info => {
             console.log(`Email sent successfully to : '${invitation.email}'`);

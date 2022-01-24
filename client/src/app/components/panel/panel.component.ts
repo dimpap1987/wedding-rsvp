@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { CreateInvitationComponent } from '../create-invitation/create-invitation.component';
+import { QrcodeComponent } from '../qrcode/qrcode.component';
 
 @Component({
   selector: 'app-panel',
@@ -15,15 +16,15 @@ import { CreateInvitationComponent } from '../create-invitation/create-invitatio
 export class PanelComponent implements OnInit {
 
   invitations: Invintation[] = [];
-  displayedColumns: string[] = ['select', 'index', 'name',  'email', 'registered', 'emailSent'];
+  displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'emailSent', 'qrcode', 'actions'];
 
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
   isLoggedIn: boolean;
-  
+
   constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.isLoggedIn = false;
-   }
+  }
 
   ngOnInit(): void {
     this.fetchInvitation();
@@ -61,5 +62,29 @@ export class PanelComponent implements OnInit {
         this.fetchInvitation()
       });
     }
+  }
+
+
+  generateQRcode(event: Event, invitation: Invintation) {
+    event.stopPropagation();
+    if (invitation._id) {
+      this.api.generateQRcodeById(invitation._id).subscribe(() => {
+        this.snackBar.open("QRCode succeessfully created", "Close", { duration: 2000 })
+        this.fetchInvitation()
+      });
+    }
+  }
+
+  displayQRcode(event: Event,invitation: Invintation) {
+    event.stopPropagation();
+    this.dialog.open(QrcodeComponent, { data: { invitation } });
+  }
+
+  sendEmailToUser(event: Event, userId: any) {
+    event.stopPropagation();
+    this.api.sendEmails([userId] as string[]).subscribe(() => {
+      this.snackBar.open("Email succeessfully sent", "Close", { duration: 2000 })
+      this.fetchInvitation()
+    });
   }
 }

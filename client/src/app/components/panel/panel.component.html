@@ -10,6 +10,11 @@
                 [matTooltipPosition]="'below'">
                 <mat-icon>mail_outline</mat-icon>
             </button>
+            <!-- <button *ngIf="this.selection.selected.length > 0" mat-icon-button color="primary"
+                aria-label="send invitation" (click)="generateQRcode()" matTooltip="Create QR code"
+                [matTooltipPosition]="'below'">
+                <img style="width: 20px;" src="https://media.istockphoto.com/photos/close-up-of-qr-code-example-picture-id518484289?b=1&k=20&m=518484289&s=170667a&w=0&h=BUUk5uL07zoKIq1yMGqMGy8AGSv33nBE48xoss6vDeg=">
+            </button> -->
         </div>
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table" class="h-100">
 
@@ -68,6 +73,47 @@
                     <mat-checkbox class="d-flex justify-content-center" [checked]="element.emailSent"
                         [color]="'primary'" [disableRipple]="true" (click)="$event.preventDefault()">
                     </mat-checkbox>
+                </td>
+            </ng-container>
+
+            <!-- Qr Code -->
+            <ng-container matColumnDef="qrcode">
+                <th mat-header-cell *matHeaderCellDef>QR Code</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="d-flex justify-content-center">
+                        <mat-checkbox [checked]="element.qrcode" [color]="'primary'" [disableRipple]="true"
+                            (click)="$event.preventDefault()">
+                        </mat-checkbox>
+                    </div>
+                </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="d-flex justify-content-center">
+                        <div class="p-1">
+                            <button mat-button color="primary" aria-label="send invitation"
+                                (click)="sendEmailToUser($event, element._id)" matTooltip="Send email"
+                                [matTooltipPosition]="'below'">
+                                <mat-icon>mail_outline</mat-icon>
+                            </button>
+                        </div>
+                        <div class="p-1">
+                            <button *ngIf="!element.qrcode" mat-button color="primary" aria-label="send invitation"
+                                (click)="generateQRcode($event,element)" matTooltip="Generate QRCode"
+                                [matTooltipPosition]="'below'">
+                                <mat-icon>settings</mat-icon>
+                            </button>
+                            <button *ngIf="element.qrcode" mat-button color="primary" aria-label="send invitation"
+                                (click)="displayQRcode($event,element)" matTooltip="Display QRCode"
+                                [matTooltipPosition]="'below'">
+                                <mat-icon>search</mat-icon>
+                            </button>
+                        </div>
+
+                    </div>
                 </td>
             </ng-container>
 

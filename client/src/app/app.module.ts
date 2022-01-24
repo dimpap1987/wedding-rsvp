@@ -30,6 +30,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { CountDownComponent } from './components/count-down/count-down.component';
 import { WeddingComponent } from './components/wedding/wedding.component';
 import { ButtonComponent } from './components/button/button.component';
+import { QrcodeComponent } from './components/qrcode/qrcode.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ButtonComponent } from './components/button/button.component';
     CountDownComponent,
     WeddingComponent,
     ButtonComponent,
+    QrcodeComponent,
   ],
   imports: [
     BrowserModule,

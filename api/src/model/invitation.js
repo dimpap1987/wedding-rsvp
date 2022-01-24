@@ -40,6 +40,10 @@ const invitationSchema = new mongoose.Schema({
     },
     dateAccepted: {
         type: Date
+    },
+    qrcode: {
+        type: String,
+        required: false
     }
 });
 

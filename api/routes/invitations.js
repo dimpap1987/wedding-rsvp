@@ -1,5 +1,6 @@
 var express = require("express");
 const mailService = require('../src/service/mailService');
+const qrService = require('../src/service/qrcodeService');
 var router = express.Router();
 const Invitation = require('../src/model/invitation');
 const { v4: uuidv4 } = require('uuid');
@@ -128,5 +129,24 @@ router.put("/register/:id", async (req, res) => {
         }).clone().catch(function (err) { console.log(err) });
 });
 
+// This router will generate qrcode for the inivtation
+router.post("/qrcode/:id", async (req, res) => {
+    try {
+        const invitationId = req.params?.id;
+
+        const invitation = await Invitation.findById(invitationId);
+        const url = process.env.INVITATION_URL + invitation.uuid;
+    
+        const qrcode = await qrService.generateQrcode(url);
+        if(qrcode){
+            await Invitation.findByIdAndUpdate({ '_id': invitationId }, { qrcode: qrcode }, { new: true })
+        }
+        res.status(200).json({ qrcode: qrcode });
+
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: "Something went wrong" });
+    }
+});
 
 module.exports = router;

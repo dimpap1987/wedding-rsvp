@@ -42,4 +42,8 @@ export class ApiService {
   login(data: any): Observable<any> {
     return this.http.post(`${environment.baseUrl}login`, data);
   }
+
+  generateQRcodeById(id: string): Observable<any> {
+    return this.http.post(`${environment.baseUrl}invitations/qrcode/${id}`,{});
+  }
 }

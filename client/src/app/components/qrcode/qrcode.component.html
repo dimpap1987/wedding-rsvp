@@ -1,0 +1,6 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <a [download]="invitation.lastName+'.jpg'" [href]="invitation?.qrcode">Download QRCode</a>
+    
+    <img [src]="invitation?.qrcode" alt="QRCode">
+    
+</div>
