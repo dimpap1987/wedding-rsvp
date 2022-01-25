@@ -1,17 +1,31 @@
 <app-wedding>
     <div class="d-flex justify-content-center">
-        <div *ngIf="!invitation.registered">
-            <app-button [text]="'Register'" (click)="register(true)"></app-button>
-        </div>
+        <form [formGroup]="_form" (ngSubmit)="register()">
+            <div class="d-flex justify-content-center">
 
-        <div *ngIf="invitation.registered">
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Adults</mat-label>
+                    <input type="number" matInput formControlName="numberOfAdults" placeholder="adults" min="1" max="20">
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Children</mat-label>
+                    <input type="number" matInput formControlName="numberOfChildren" placeholder="Children" min="0" max="20">
+                </mat-form-field>
+
+            </div>
+            <div>
+                <app-button [text]="registrationText"></app-button>
+            </div>
+        </form>
+
+        <!-- <div *ngIf="invitation.registered">
             <div class="d-flex justify-content-center">
                 <h2>See you soon</h2>
             </div>
             <div class="d-flex justify-content-center">
-                <app-button [text]="'Unregister'" (click)="register(false)"></app-button>
+                <app-button [text]="'Unregister'" (click)="register(false,0,0)"></app-button>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </app-wedding>

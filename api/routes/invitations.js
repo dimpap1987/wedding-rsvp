@@ -33,8 +33,8 @@ router.post("/", async (req, res) => {
             return {
                 uuid: uuidv4(),
                 lastName: element?.lastName,
-                email: element?.email,
-                mobile: element?.mobile
+                email: element?.email
+                // mobile: element?.mobile
             }
         });
 
@@ -119,7 +119,20 @@ router.delete("/", async (req, res) => {
 
 router.put("/register/:id", async (req, res) => {
 
-    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, { registered: req.body?.registered }, { new: true },
+    const invitation = req.body;
+
+    if(invitation?.registered == true){
+        if(!invitation?.numberOfAdults > 0){
+            res.status(500).json({ message: "ERR0R_CODE: INVALID GUESTS NUMBER" });
+            return;
+        }
+    }
+    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, 
+    {
+        registered: invitation?.registered,
+        numberOfAdults: invitation?.numberOfAdults,
+        numberOfChildren: invitation?.numberOfChildren > 0 ? invitation?.numberOfChildren : null
+    }, { new: true },
         (err, invitation) => {
             if (!err) {
                 res.json(invitation);
@@ -136,9 +149,9 @@ router.post("/qrcode/:id", async (req, res) => {
 
         const invitation = await Invitation.findById(invitationId);
         const url = process.env.INVITATION_URL + invitation.uuid;
-    
+
         const qrcode = await qrService.generateQrcode(url);
-        if(qrcode){
+        if (qrcode) {
             await Invitation.findByIdAndUpdate({ '_id': invitationId }, { qrcode: qrcode }, { new: true })
         }
         res.status(200).json({ qrcode: qrcode });

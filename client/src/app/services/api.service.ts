@@ -35,8 +35,12 @@ export class ApiService {
     return this.http.get(`${environment.baseUrl}invitations/token/${uuid}`);
   }
 
-  registerInvitation(id: string, registered: boolean): Observable<any> {
-    return this.http.put(`${environment.baseUrl}invitations/register/${id}`, { registered: registered });
+  registerInvitation(id: string, registered: boolean, numberOfAdults: number, numberOfChildren: number): Observable<any> {
+    return this.http.put(`${environment.baseUrl}invitations/register/${id}`, {
+      registered: registered,
+      numberOfAdults: numberOfAdults,
+      numberOfChildren: numberOfChildren
+    });
   }
 
   login(data: any): Observable<any> {
@@ -44,6 +48,6 @@ export class ApiService {
   }
 
   generateQRcodeById(id: string): Observable<any> {
-    return this.http.post(`${environment.baseUrl}invitations/qrcode/${id}`,{});
+    return this.http.post(`${environment.baseUrl}invitations/qrcode/${id}`, {});
   }
 }

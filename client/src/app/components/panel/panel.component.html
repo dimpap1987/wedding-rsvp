@@ -66,6 +66,18 @@
                 </td>
             </ng-container>
 
+            <!-- Adults -->
+            <ng-container matColumnDef="adults">
+                <th mat-header-cell *matHeaderCellDef>Adults</th>
+                <td mat-cell *matCellDef="let element">{{element.numberOfAdults}}</td>
+            </ng-container>
+
+            <!-- Children Column -->
+            <ng-container matColumnDef="children">
+                <th mat-header-cell *matHeaderCellDef>Children</th>
+                <td mat-cell *matCellDef="let element">{{element.numberOfChildren}}</td>
+            </ng-container>
+
             <!-- Symbol Column -->
             <ng-container matColumnDef="emailSent">
                 <th mat-header-cell *matHeaderCellDef>Email Received</th>

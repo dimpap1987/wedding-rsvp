@@ -10,4 +10,6 @@ export interface Invintation {
   dateCreated?: string;
   dateAccepted?: string;
   qrcode?: string;
+  numberOfAdults?:number;
+  numberOfChildren?:number;
 }

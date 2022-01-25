@@ -44,6 +44,14 @@ const invitationSchema = new mongoose.Schema({
     qrcode: {
         type: String,
         required: false
+    },
+    numberOfAdults: {
+        type: Number,
+        required: false
+    },
+    numberOfChildren: {
+        type: Number,
+        required: false
     }
 });
 
