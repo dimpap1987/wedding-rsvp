@@ -1,7 +1,8 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
@@ -16,11 +17,14 @@ import { QrcodeComponent } from '../qrcode/qrcode.component';
 export class PanelComponent implements OnInit {
 
   invitations: Invintation[] = [];
-  displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered','adults', 'children', 'emailSent', 'qrcode', 'actions'];
+  displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'adults', 'children', 'emailSent', 'qrcode', 'actions'];
+  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'totalAdults', 'totalChildren', 'emptyFooter', 'emptyFooter', 'emptyFooter'];
 
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
   isLoggedIn: boolean;
+
+  @ViewChild(MatSort, {static: true}) sort!: MatSort;
 
   constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.isLoggedIn = false;
@@ -28,6 +32,7 @@ export class PanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchInvitation();
+    this.dataSource.sort = this.sort;
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -75,7 +80,7 @@ export class PanelComponent implements OnInit {
     }
   }
 
-  displayQRcode(event: Event,invitation: Invintation) {
+  displayQRcode(event: Event, invitation: Invintation) {
     event.stopPropagation();
     this.dialog.open(QrcodeComponent, { data: { invitation } });
   }
@@ -86,5 +91,25 @@ export class PanelComponent implements OnInit {
       this.snackBar.open("Email succeessfully sent", "Close", { duration: 2000 })
       this.fetchInvitation()
     });
+  }
+
+  getTotalAdults() {
+    return this.invitations.reduce((total, inv) => {
+      if (inv.numberOfAdults) {
+        return total += inv.numberOfAdults;
+      } else {
+        return total += 0;
+      }
+    }, 0);
+  }
+
+  getTotalChildren() {
+    return this.invitations.reduce((total, inv) => {
+      if (inv.numberOfChildren) {
+        return total += inv.numberOfChildren;
+      } else {
+        return total += 0;
+      }
+    }, 0);
   }
 }
