@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
@@ -14,7 +14,7 @@ import { QrcodeComponent } from '../qrcode/qrcode.component';
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit {
+export class PanelComponent implements OnInit, AfterViewInit  {
 
   invitations: Invintation[] = [];
   displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'adults', 'children', 'emailSent', 'qrcode', 'actions'];
@@ -32,8 +32,12 @@ export class PanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchInvitation();
+  }
+
+  ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
+
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
