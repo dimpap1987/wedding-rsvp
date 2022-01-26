@@ -1,13 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
 const REGISTER = 'Register';
-const UPDATE_REGISTRATION = 'Update Registration';
 const REGISTERED = 'Registered!';
+
+/** Error when invalid control is dirty, touched, or submitted. */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
 
 @Component({
   selector: 'app-accept-invitation',
@@ -21,7 +29,13 @@ export class AcceptInvitationComponent implements OnInit {
   _form: FormGroup;
 
   isRegisterActivated: boolean = true;
-  registrationText!:string;
+  registrationText!: string;
+
+  maxAdults = 10;
+  minAdults = 1;
+
+  maxChildren = 10;
+  minChildren = 0;
 
   constructor(private route: ActivatedRoute, private api: ApiService, private snackBar: MatSnackBar, private _fb: FormBuilder) {
     this.route.params.subscribe(uuid => {
@@ -29,10 +43,12 @@ export class AcceptInvitationComponent implements OnInit {
     });
 
     this._form = this._fb.group({
-      'numberOfAdults': [this.invitation?.numberOfAdults],
-      'numberOfChildren': [this.invitation?.numberOfChildren],
+      'numberOfAdults': ['', [Validators.required, Validators.minLength(this.minAdults), Validators.maxLength(this.maxAdults)]],
+      'numberOfChildren': ['', [Validators.minLength(this.minChildren), Validators.maxLength(this.maxChildren)]],
     });
   }
+
+  matcher = new MyErrorStateMatcher()
 
   ngOnInit(): void {
     if (!this.uuidToken) return;
@@ -52,43 +68,22 @@ export class AcceptInvitationComponent implements OnInit {
           numberOfChildren: this.invitation?.numberOfChildren
         });
       }
-    }).add(() => {
-      this._form.get('numberOfAdults')?.valueChanges.subscribe(() => {
-        if (this.invitation?.registered) {
-          this.isRegisterActivated = true;
-          this.registrationText = UPDATE_REGISTRATION;
-        }
-      });
-      this._form.get('numberOfChildren')?.valueChanges.subscribe(() => {
-        if (this.invitation?.registered && this._form.get('numberOfAdults')?.value > 0) {
-          this.isRegisterActivated = true;
-          this.registrationText = UPDATE_REGISTRATION;
-        }
-      });
     });
-
   }
 
 
   register() {
-    const formData = this._form.value;
-    if (!this.invitation?._id || !this.isRegisterActivated) return;
 
-    // TODO UI ERROR messages
-    if(!formData.numberOfAdults || formData.numberOfAdults < 1){
-      return;
-    }
+    if (this.invitation?._id && this._form.valid) {
+      const formData = this._form.value;
 
-    this.api.registerInvitation(this.invitation._id, true, formData.numberOfAdults, formData.numberOfChildren)
-      .subscribe((result) => {
-        this.invitation = result;
-        this.isRegisterActivated = false;
-        this.registrationText = REGISTERED;
-
-        if (formData.registered) {
+      this.api.registerInvitation(this.invitation._id, true, formData.numberOfAdults, formData.numberOfChildren)
+        .subscribe((result) => {
+          this.invitation = result;
+          this.isRegisterActivated = false;
+          this.registrationText = REGISTERED;
           this.snackBar.open("Successfully registered!", "Close", { duration: 2000 })
-        }
-      });
+        });
+    }
   }
-
 }

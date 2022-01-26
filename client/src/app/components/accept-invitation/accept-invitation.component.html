@@ -1,31 +1,41 @@
 <app-wedding>
-    <div class="d-flex justify-content-center">
-        <form [formGroup]="_form" (ngSubmit)="register()">
-            <div class="d-flex justify-content-center">
+    <form [formGroup]="_form" (ngSubmit)="register()">
+        <div *ngIf="isRegisterActivated" class="d-flex flex-wrap justify-content-center align-items-center">
 
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Adults</mat-label>
-                    <input type="number" matInput formControlName="numberOfAdults" placeholder="adults" min="1" max="20">
-                </mat-form-field>
-                <mat-form-field class="example-full-width" appearance="outline">
-                    <mat-label>Children</mat-label>
-                    <input type="number" matInput formControlName="numberOfChildren" placeholder="Children" min="0" max="20">
-                </mat-form-field>
+            <!-- Adults -->
+            <mat-form-field class="example-full-width p-1 w-50" appearance="outline">
+                <mat-label>Ενήλικες</mat-label>
+                <input type="number" matInput formControlName="numberOfAdults" placeholder="Ενήλικες" [min]="minAdults"
+                    [max]="maxAdults" [errorStateMatcher]="matcher">
+                <mat-error
+                    *ngIf="_form.get('numberOfAdults')?.errors && _form.get('numberOfAdults')?.hasError('required')">
+                    Το πεδίο είναι <strong>υποχρεωτικό</strong>
+                </mat-error>
+                <mat-error *ngIf="_form.get('numberOfAdults')?.errors && _form.get('numberOfAdults')?.hasError('min')">
+                    Η ελάχιστη τιμή είναι <strong>{{minAdults}} άτομο</strong>
+                </mat-error>
+                <mat-error *ngIf="_form.get('numberOfAdults')?.errors && _form.get('numberOfAdults')?.hasError('max')">
+                    Η μέγιστη τιμή είναι <strong>{{maxAdults}} άτομα</strong>
+                </mat-error>
+            </mat-form-field>
 
-            </div>
-            <div>
-                <app-button [text]="registrationText"></app-button>
-            </div>
-        </form>
-
-        <!-- <div *ngIf="invitation.registered">
-            <div class="d-flex justify-content-center">
-                <h2>See you soon</h2>
-            </div>
-            <div class="d-flex justify-content-center">
-                <app-button [text]="'Unregister'" (click)="register(false,0,0)"></app-button>
-            </div>
-        </div> -->
-
-    </div>
+            <!-- Children -->
+            <mat-form-field class="example-full-width p-1 w-50" appearance="outline">
+                <mat-label>Ανήλικοι</mat-label>
+                <input type="number" matInput formControlName="numberOfChildren" placeholder="Ανήλικοι"
+                    [min]="minChildren" [max]="maxChildren" [errorStateMatcher]="matcher">
+                <mat-error
+                    *ngIf="_form.get('numberOfChildren')?.errors && _form.get('numberOfChildren')?.hasError('min')">
+                    Η ελάχιστη τιμή είναι <strong>{{minChildren}} άτομο</strong>
+                </mat-error>
+                <mat-error
+                    *ngIf="_form.get('numberOfChildren')?.errors && _form.get('numberOfChildren')?.hasError('max')">
+                    Η μέγιστη τιμή είναι <strong>{{maxChildren}} άτομα</strong>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="pt-2">
+            <app-button [buttonDisabled]="!isRegisterActivated" [text]="registrationText"></app-button>
+        </div>
+    </form>
 </app-wedding>
