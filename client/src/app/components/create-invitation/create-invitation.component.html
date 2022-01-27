@@ -19,8 +19,9 @@
                         </mat-form-field>
                     </td> -->
                     <td>
-                        <button class="delete-button" (click)="_removeRow(i)" type="button" mat-mini-fab color="warn" matTooltip="Delete" [matTooltipPosition]="'below'">
-                            <mat-icon>close</mat-icon>
+                        <button (click)="_removeRow(i)" type="button" mat-button color="primary" matTooltip="Delete"
+                            [matTooltipPosition]="'below'">
+                            <mat-icon>delete</mat-icon>
                         </button>
                     </td>
                 </tr>
@@ -28,10 +29,12 @@
             <tbody>
                 <tr>
                     <td class="">
-                        <button class="button-tooltip" mat-icon-button color="primary" (click)="_addRow()" matTooltip="Add new" [matTooltipClass]="'my-tooltip'" [matTooltipPosition]="'below'">
+                        <button class="button-tooltip" mat-icon-button color="primary" (click)="_addRow()"
+                            matTooltip="Add new" [matTooltipClass]="'my-tooltip'" [matTooltipPosition]="'below'">
                             <mat-icon>add</mat-icon>
                         </button>
-                        <button *ngIf="_form.value.data?.length > 0" mat-icon-button color="primary"  matTooltip="Submit" [matTooltipPosition]="'below'" (click)="onSubmit()">
+                        <button *ngIf="_form.value.data?.length > 0" mat-icon-button color="primary" matTooltip="Submit"
+                            [matTooltipPosition]="'below'" (click)="onSubmit()">
                             <mat-icon style="color: green;">check</mat-icon>
                         </button>
                     </td>
