@@ -2,7 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
@@ -14,7 +14,7 @@ import { QrcodeComponent } from '../qrcode/qrcode.component';
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss']
 })
-export class PanelComponent implements OnInit, AfterViewInit  {
+export class PanelComponent implements OnInit {
 
   invitations: Invintation[] = [];
   displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'adults', 'children', 'emailSent', 'qrcode', 'actions'];
@@ -24,7 +24,8 @@ export class PanelComponent implements OnInit, AfterViewInit  {
   selection = new SelectionModel<Invintation>(true, []);
   isLoggedIn: boolean;
 
-  @ViewChild(MatSort, {static: true}) sort!: MatSort;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  sortedData!: Invintation[];
 
   constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.isLoggedIn = false;
@@ -34,9 +35,9 @@ export class PanelComponent implements OnInit, AfterViewInit  {
     this.fetchInvitation();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-  }
+  // ngAfterViewInit() {
+  //   this.dataSource.sort = this.sort;
+  // }
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
@@ -59,6 +60,7 @@ export class PanelComponent implements OnInit, AfterViewInit  {
   fetchInvitation() {
     this.api.getInvitations().subscribe(response => {
       this.invitations = response;
+      this.sortedData = this.invitations.slice();
       this.dataSource = new MatTableDataSource<Invintation>(this.invitations);
     });
   }
@@ -115,5 +117,40 @@ export class PanelComponent implements OnInit, AfterViewInit  {
         return total += 0;
       }
     }, 0);
+  }
+
+  deleteInvitation(event: Event, invitationId: string) {
+    event.stopPropagation();
+    this.api.deleteInvitations([invitationId])
+      .subscribe(() => {
+        this.snackBar.open("Successfully deleted", "Close", { duration: 2000 })
+        this.fetchInvitation()
+      });
+  }
+
+  private compare(a: any, b: any, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
+
+  sortData(sort: Sort) {
+    const data = this.invitations.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'registered':
+        case 'emailSent':
+          return Number(a.registered) - Number(b.registered);
+        case 'adults':
+        case 'children':
+          return this.compare(a.numberOfAdults, b.numberOfAdults, isAsc);
+        default:
+          return 0;
+      }
+    });
   }
 }

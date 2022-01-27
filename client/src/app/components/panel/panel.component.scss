@@ -2,11 +2,17 @@ table {
     width: 100%;
 }
 
-td, th {
+td,
+th {
     text-align: center !important;
     vertical-align: middle !important;
+    padding: 15px;
 }
 
 th.mat-sort-header-sorted {
     color: black;
+}
+
+::ng-deep .mat-sort-header-button {
+    text-align: left;
   }

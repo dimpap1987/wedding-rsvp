@@ -107,7 +107,7 @@ router.put("/:id", async (req, res) => {
 
 // This router will delete mutiple invitations
 router.delete("/", async (req, res) => {
-    await Invitation.deleteMany({ '_id': { $in: req.body } },
+    await Invitation.deleteMany({ '_id': { $in: req.body?.idList } },
         (err) => {
             if (!err) {
                 res.json({ message: "Successfully deleted" });

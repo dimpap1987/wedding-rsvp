@@ -27,7 +27,7 @@ export class ApiService {
     return this.http.put(`${environment.baseUrl + 'invitations/'}${id}`, invitation);
   }
 
-  deleteInvitations(idList: number[]): Observable<any> {
+  deleteInvitations(idList: string[]): Observable<any> {
     return this.http.delete(environment.baseUrl + 'invitations', { body: { idList } });
   }
 
