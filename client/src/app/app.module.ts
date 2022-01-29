@@ -24,6 +24,7 @@ import { AcceptInvitationComponent } from './components/accept-invitation/accept
 import { ButtonComponent } from './components/button/button.component';
 import { CountDownComponent } from './components/count-down/count-down.component';
 import { CreateInvitationComponent } from './components/create-invitation/create-invitation.component';
+import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
 import { HomeComponent } from './components/home/home.component';
 import { SpinnerComponent } from './components/loader/spinner/spinner.component';
 import { LoginComponent } from './components/login/login.component';
@@ -33,6 +34,7 @@ import { PanelComponent } from './components/panel/panel.component';
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import { WeddingComponent } from './components/wedding/wedding.component';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
+import { GoogleMapsModule } from '@angular/google-maps'
 
 @NgModule({
   declarations: [
@@ -49,6 +51,7 @@ import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
     ButtonComponent,
     QrcodeComponent,
     MatTableResponsiveDirective,
+    GoogleMapsComponent
   ],
   imports: [
     BrowserModule,
@@ -70,7 +73,8 @@ import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
     MatCardModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatSortModule
+    MatSortModule,
+    GoogleMapsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]

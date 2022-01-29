@@ -1,0 +1,5 @@
+<div class="my-google-map d-flex justify-content-center">
+    <google-map width="90vw" height="50vh" [options]="mapOptions">
+                <map-marker [position]="marker.position" (mapClick)="redirect()"></map-marker>
+    </google-map>
+</div>
