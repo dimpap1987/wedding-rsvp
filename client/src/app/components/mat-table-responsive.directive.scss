@@ -1,6 +1,6 @@
 @media (max-width: 768px) {
     .mat-table[matTableResponsive] {
-      .mat-header-row {
+      .mat-header-row, .mat-footer-row {
         display: flex;
         flex-wrap: wrap;
         height: auto;
