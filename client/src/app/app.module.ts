@@ -1,6 +1,8 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GoogleMapsModule } from '@angular/google-maps';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -26,7 +28,6 @@ import { CountDownComponent } from './components/count-down/count-down.component
 import { CreateInvitationComponent } from './components/create-invitation/create-invitation.component';
 import { GoogleMapsComponent } from './components/google-maps/google-maps.component';
 import { HomeComponent } from './components/home/home.component';
-import { SpinnerComponent } from './components/loader/spinner/spinner.component';
 import { LoginComponent } from './components/login/login.component';
 import { MatTableResponsiveDirective } from './components/mat-table-responsive.directive';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -34,13 +35,10 @@ import { PanelComponent } from './components/panel/panel.component';
 import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import { WeddingComponent } from './components/wedding/wedding.component';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
-import { GoogleMapsModule } from '@angular/google-maps'
-import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent,
     PanelComponent,
     CreateInvitationComponent,
     HomeComponent,
