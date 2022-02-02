@@ -15,4 +15,11 @@ th.mat-sort-header-sorted {
 
 ::ng-deep .mat-sort-header-button {
     text-align: left;
-  }
+}
+
+td.actions {
+    /* row padding */
+    padding: 16px 0;
+    /* row border */
+    border-left: 1px solid lightsteelblue;
+}

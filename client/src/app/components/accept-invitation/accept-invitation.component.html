@@ -1,4 +1,9 @@
 <app-wedding>
+
+    <h1 style="text-align: center;">
+        Welcome {{invitation.lastName}}
+    </h1>
+
     <form [formGroup]="_form" (ngSubmit)="register()">
         <div *ngIf="isRegisterActivated" class="d-flex flex-wrap justify-content-center align-items-center">
 

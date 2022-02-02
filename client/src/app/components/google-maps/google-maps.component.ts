@@ -8,12 +8,12 @@ import { environment } from 'src/environments/environment';
 })
 export class GoogleMapsComponent implements OnInit {
 
-  lat = 38.03236994402693;
-  lng = 23.854960922615078;
+  lat = 37.862894;
+  lng = 23.876337;
 
   mapOptions: google.maps.MapOptions = {
     center: { lat: this.lat, lng: this.lng },
-    zoom: 14
+    zoom: 15
   }
   marker = {
     position: { lat: this.lat, lng: this.lng },

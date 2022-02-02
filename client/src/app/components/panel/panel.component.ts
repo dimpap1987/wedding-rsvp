@@ -1,11 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { environment } from 'src/environments/environment';
 import { CreateInvitationComponent } from '../create-invitation/create-invitation.component';
 import { QrcodeComponent } from '../qrcode/qrcode.component';
 
@@ -17,8 +18,8 @@ import { QrcodeComponent } from '../qrcode/qrcode.component';
 export class PanelComponent implements OnInit {
 
   invitations: Invintation[] = [];
-  displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'adults', 'children', 'emailSent', 'qrcode', 'actions'];
-  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'totalAdults', 'totalChildren', 'emptyFooter', 'emptyFooter', 'emptyFooter'];
+  displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'emailSent', 'qrcode', 'adults', 'children', 'actions'];
+  displayedTotalColumns = ['totalAmountTitle', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'totalAdults', 'totalChildren', 'emptyFooter'];
 
   dataSource = new MatTableDataSource<Invintation>();
   selection = new SelectionModel<Invintation>(true, []);
@@ -26,6 +27,8 @@ export class PanelComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   sortedData!: Invintation[];
+
+  inviteUrl = environment.invitationUrl;
 
   constructor(private api: ApiService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.isLoggedIn = false;
@@ -152,5 +155,10 @@ export class PanelComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  copyInvitationToClipboard(event: Event, invitation: Invintation) {
+    event.stopPropagation();
+    this.snackBar.open("Successfully copied to clipboard", "Close", { duration: 2000 })
   }
 }

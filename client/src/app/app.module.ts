@@ -35,6 +35,7 @@ import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import { WeddingComponent } from './components/wedding/wedding.component';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
 import { GoogleMapsModule } from '@angular/google-maps'
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { GoogleMapsModule } from '@angular/google-maps'
     MatToolbarModule,
     MatSidenavModule,
     MatSortModule,
-    GoogleMapsModule
+    GoogleMapsModule,
+    ClipboardModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]
