@@ -8,11 +8,14 @@ const invitationSchema = new mongoose.Schema({
     },
     lastName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
-        required: false
+        required: true,
+        unique: true,
+        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     },
     mobile: {
         type: Number,

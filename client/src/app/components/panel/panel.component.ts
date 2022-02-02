@@ -122,9 +122,9 @@ export class PanelComponent implements OnInit {
     }, 0);
   }
 
-  deleteInvitation(event: Event, invitationId: string) {
+  deleteInvitation(event: Event, invitationIdList: any[]) {
     event.stopPropagation();
-    this.api.deleteInvitations([invitationId])
+    this.api.deleteInvitations(invitationIdList)
       .subscribe(() => {
         this.snackBar.open("Successfully deleted", "Close", { duration: 2000 })
         this.fetchInvitation()
@@ -160,5 +160,9 @@ export class PanelComponent implements OnInit {
   copyInvitationToClipboard(event: Event, invitation: Invintation) {
     event.stopPropagation();
     this.snackBar.open("Successfully copied to clipboard", "Close", { duration: 2000 })
+  }
+
+  deleteInvitations(event: Event) {
+    this.deleteInvitation(event, this.selection.selected.map(s => s._id));
   }
 }

@@ -38,11 +38,7 @@ router.post("/", async (req, res) => {
             }
         });
 
-        if (invites.length == 0) {
-            res.status(404).json({ message: "No invitations found" });
-        }
-
-        await Invitation.bulkWrite(
+        const results = await Invitation.bulkWrite(
             invites.map((invite) =>
             ({
                 updateOne: {
@@ -53,7 +49,10 @@ router.post("/", async (req, res) => {
             })
             )
         )
-        res.status(200).json({ message: "Invitations saved successfully" });
+        if (results.nUpserted > 0 || results.nInserted > 0) {
+            return res.status(200).json({ message: "Invitations saved successfully" });
+        }
+        return res.status(400).json({ message: "Something went wrong" });
 
     } catch (error) {
         console.error(error)
@@ -64,9 +63,9 @@ router.post("/", async (req, res) => {
                 errors[key] = error.errors[key].message;
             });
 
-            res.status(400).send(errors);
+            return res.status(400).send(errors);
         }
-        res.status(500).json({ message: "Something went wrong" });
+        return res.status(400).json({ message: "Something went wrong" });
     }
 });
 
@@ -121,18 +120,18 @@ router.put("/register/:id", async (req, res) => {
 
     const invitation = req.body;
 
-    if(invitation?.registered == true){
-        if(!invitation?.numberOfAdults > 0){
+    if (invitation?.registered == true) {
+        if (!invitation?.numberOfAdults > 0) {
             res.status(500).json({ message: "ERR0R_CODE: INVALID GUESTS NUMBER" });
             return;
         }
     }
-    await Invitation.findByIdAndUpdate({ '_id': req.params?.id }, 
-    {
-        registered: invitation?.registered,
-        numberOfAdults: invitation?.numberOfAdults,
-        numberOfChildren: invitation?.numberOfChildren > 0 ? invitation?.numberOfChildren : null
-    }, { new: true },
+    await Invitation.findByIdAndUpdate({ '_id': req.params?.id },
+        {
+            registered: invitation?.registered,
+            numberOfAdults: invitation?.numberOfAdults,
+            numberOfChildren: invitation?.numberOfChildren > 0 ? invitation?.numberOfChildren : null
+        }, { new: true },
         (err, invitation) => {
             if (!err) {
                 res.json(invitation);

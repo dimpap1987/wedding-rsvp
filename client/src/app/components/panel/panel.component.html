@@ -1,14 +1,20 @@
 <app-navbar></app-navbar>
 <div>
-    <div class="ml-2 p-1">
+    <div class="ml-2 p-1 d-flex">
         <button mat-icon-button color="primary" aria-label="New invitation" (click)="addNewInvitation()"
             matTooltip="Create new Invitation" [matTooltipPosition]="'below'">
             <mat-icon>add</mat-icon>
         </button>
-        <button *ngIf="this.selection.selected.length > 0" mat-icon-button color="primary" aria-label="send invitation"
-            (click)="sendEmailsToListOfUsers()" matTooltip="Send email" [matTooltipPosition]="'below'">
-            <mat-icon>mail_outline</mat-icon>
-        </button>
+        <div *ngIf="this.selection.selected.length > 0">
+            <button mat-icon-button color="primary" aria-label="send invitation" (click)="sendEmailsToListOfUsers()"
+                matTooltip="Send email" [matTooltipPosition]="'below'">
+                <mat-icon>mail_outline</mat-icon>
+            </button>
+            <button mat-button color="primary" (click)="deleteInvitations($event)" matTooltip="Delete"
+                [matTooltipPosition]="'below'">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </div>
     </div>
 
     <table mat-table matTableResponsive [dataSource]="sortedData" class="mat-elevation-z8 demo-table" class="h-100"
@@ -129,7 +135,7 @@
                         </button>
                     </div>
                     <div class="p-1">
-                        <button mat-button color="primary" (click)="deleteInvitation($event,element._id)"
+                        <button mat-button color="primary" (click)="deleteInvitation($event,[element._id])"
                             matTooltip="Delete" [matTooltipPosition]="'below'">
                             <mat-icon>delete</mat-icon>
                         </button>

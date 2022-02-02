@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
-const emailregex: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 
 @Component({
   selector: 'app-create-invitation',
@@ -42,9 +41,23 @@ export class CreateInvitationComponent implements OnInit {
 
   onSubmit() {
 
-    const data = this._form.value.data;
-    
-    // TODO validate email and phone number
+    const data: Invintation[] = this._form.value.data;
+
+    for (const el of data) {
+
+      if (!el.lastName) {
+        this.snackBar.open(`'Name' is required`, "Close", { duration: 4000 })
+        return;
+      }
+      if (!el.email) {
+        this.snackBar.open(`Email is required for name : '${el.lastName}'`, "Close", { duration: 4000 })
+        return;
+      }
+      if (!el.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        this.snackBar.open(`Invalid email : '${el.email}'`, "Close", { duration: 4000 })
+        return;
+      }
+    };
 
     this.api.saveInvitation(data).subscribe(() => {
       this.snackBar.open("Succeessfully saved", "Close", { duration: 2000 });
