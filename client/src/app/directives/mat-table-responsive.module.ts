@@ -5,4 +5,4 @@ import { MatTableResponsiveDirective } from "./mat-table-responsive.directive";
   declarations: [MatTableResponsiveDirective],
   exports: [MatTableResponsiveDirective]
 })
-export class MatTableResponsiveModule {}
+export class MatTableResponsiveModule { }

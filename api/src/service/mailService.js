@@ -12,7 +12,7 @@ oauth_client.setCredentials({ refresh_token : process.env.EMAIL_REFRESH_TOKEN});
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        type:'OAuth2',
+        type: 'OAuth2',
         user: process.env.EMAIL_ADDRESS,
         clientId: process.env.EMAIL_CLIENT_ID,
         clientSecret: process.env.EMAIL_SECRET_KEY,
