@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
-const REGISTER = 'Register';
+const REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
 const REGISTERED = 'Registered!';
 
 /** Error when invalid control is dirty, touched, or submitted. */

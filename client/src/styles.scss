@@ -1,16 +1,51 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-.transparent .mat-dialog-container {
-    box-shadow: none;
-    background: rgba(0, 0, 0, 0);
+@import "./app/components/mat-table-responsive.directive.scss";
+
+* {
+    box-sizing: border-box;
 }
 
-html,
 body {
-    height: 100%;
-    margin: 0!important;
-    // overflow: hidden;
-    // overscroll-behavior: contain;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-@import './app/components/mat-table-responsive.directive.scss';
+a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
+
+#MessageViewBody a {
+    color: inherit;
+    text-decoration: none;
+}
+
+p {
+    line-height: inherit;
+}
+
+@media (max-width: 660px) {
+    .icons-inner {
+        text-align: center;
+    }
+
+    .icons-inner td {
+        margin: 0 auto;
+    }
+
+    .row-content {
+        width: 100% !important;
+    }
+
+    .stack .column {
+        width: 100%;
+        display: block;
+    }
+}
+
+.table-center {
+    display: flex;
+    justify-content: center;
+}

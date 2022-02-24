@@ -14,7 +14,7 @@ var app = express();
 config.databaseInit();
 // view engine setup
 var cors = require('cors')
-app.use(cors())
+app.use(cors({origin: '*'}))
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
