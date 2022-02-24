@@ -17,39 +17,6 @@ p {
     margin: 0px;
 }
 
-a[x-apple-data-detectors] {
-    color: inherit !important;
-    text-decoration: inherit !important;
-}
-
-// #MessageViewBody a {
-//     color: inherit;
-//     text-decoration: none;
-// }
-
-// p {
-//     line-height: inherit;
-// }
-
-// @media (max-width: 660px) {
-//     .icons-inner {
-//         text-align: center;
-//     }
-
-//     .icons-inner td {
-//         margin: 0 auto;
-//     }
-
-//     .row-content {
-//         width: 100% !important;
-//     }
-
-//     .stack .column {
-//         width: 100%;
-//         display: block;
-//     }
-// }
-
 .table-center {
     display: flex;
     justify-content: center;
@@ -70,5 +37,4 @@ a[x-apple-data-detectors] {
     margin-top: 80px;
     margin-left: 60px;
     margin-right: 60px;
-
 }
