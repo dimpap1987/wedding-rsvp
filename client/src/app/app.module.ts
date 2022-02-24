@@ -36,6 +36,7 @@ import { QrcodeComponent } from './components/qrcode/qrcode.component';
 import { WeddingComponent } from './components/wedding/wedding.component';
 import { MatTableResponsiveModule } from './directives/mat-table-responsive.module';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
     ButtonComponent,
     QrcodeComponent,
     GoogleMapsComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

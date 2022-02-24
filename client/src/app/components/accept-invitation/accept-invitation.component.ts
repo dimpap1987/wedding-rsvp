@@ -7,7 +7,7 @@ import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
 const REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
-const REGISTERED = 'Registered!';
+const REGISTERED = 'Ευχαριστούμε !';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -59,6 +59,7 @@ export class AcceptInvitationComponent implements OnInit {
         return;
       }
       this.invitation = inv;
+      
       this.isRegisterActivated = !this.invitation?.registered
       this.registrationText = this.invitation?.registered ? REGISTERED : REGISTER;
 
