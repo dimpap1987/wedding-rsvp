@@ -29,6 +29,7 @@ export class AcceptInvitationComponent implements OnInit {
   _form: FormGroup;
 
   isRegisterActivated: boolean = true;
+  isValid:boolean;
   registrationText!: string;
 
   maxAdults = 10;
@@ -59,7 +60,7 @@ export class AcceptInvitationComponent implements OnInit {
         return;
       }
       this.invitation = inv;
-      
+      this.isValid = true;
       this.isRegisterActivated = !this.invitation?.registered
       this.registrationText = this.invitation?.registered ? REGISTERED : REGISTER;
 
