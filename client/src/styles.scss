@@ -23,11 +23,13 @@ p {
 }
 
 .giotaAndNikos {
-    font-size: 58px;
+    font-size: 120px;
     font-weight: 800;
     color: white;
-    padding-top: 80px;
+    display: flex;
+    align-items: center;
     font-family: 'Dancing Script', cursive;
+    height: 290px;
 }
 
 .date{
@@ -35,7 +37,19 @@ p {
     font-size: 16px;
     font-weight: 500;
     color: rgb(54, 54, 54);
-    margin-top: 80px;
+    margin-top: 50px;
     margin-left: 60px;
     margin-right: 60px;
 }
+
+.dateWedding {
+    font-weight: 600;
+}
+
+.barcelona {
+    height: 400px;
+}
+
+// * {
+//     background-color: #f7f6ec;
+// }

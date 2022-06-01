@@ -1,5 +1,26 @@
-// .mat-card:not([class*=mat-elevation-z]) {
-//     box-shadow: 0 2px 1px -1px rgba(0,0,0,1), 
-//                 0 1px 1px 0 rgba(0,0,0,1), 
-//                 0 1px 3px 0 rgba(0,0,0,1);
+.wedding-photos {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+// .barcelona{
+//     width: 225px;
 // }
+
+@media screen and (max-width: 600px) {
+    .barcelona, .new-york {
+      padding: 2px;
+    }
+    .nameEnd{
+        display: block;
+    }
+  }
+
+//   @media screen and (min-width: 600px) {
+//     .space {
+//       height: 20px;
+//       height: 20px;
+
+//     }
+//   }
