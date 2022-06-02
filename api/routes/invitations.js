@@ -29,7 +29,7 @@ router.get("/token/:uuid", async (req, res) => {
 router.post("/", async (req, res) => {
 
     try {
-        const invites = req.body?.filter(element => element.email || element.mobile).map(element => {
+        const invites = req.body?.map(element => {
             return {
                 uuid: uuidv4(),
                 lastName: element?.lastName,
@@ -42,17 +42,17 @@ router.post("/", async (req, res) => {
             invites.map((invite) =>
             ({
                 updateOne: {
-                    filter: { email: invite.email, mobile: invite.mobile },
+                    filter: { lastName: invite.lastName },
                     update: invite,
                     upsert: true
                 }
             })
             )
         )
-        if (results.nUpserted > 0 || results.nInserted > 0) {
+        // if (results.nUpserted > 0 || results.nInserted > 0) {
             return res.status(200).json({ message: "Invitations saved successfully" });
-        }
-        return res.status(400).json({ message: "Something went wrong" });
+        // }
+        // return res.status(400).json({ message: "Something went wrong" });
 
     } catch (error) {
         console.error(error)
