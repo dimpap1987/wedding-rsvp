@@ -49,14 +49,14 @@ export class CreateInvitationComponent implements OnInit {
         this.snackBar.open(`'Name' is required`, "Close", { duration: 4000 })
         return;
       }
-      if (!el.email) {
-        this.snackBar.open(`Email is required for name : '${el.lastName}'`, "Close", { duration: 4000 })
-        return;
-      }
-      if (!el.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-        this.snackBar.open(`Invalid email : '${el.email}'`, "Close", { duration: 4000 })
-        return;
-      }
+      // if (!el.email) {
+      //   this.snackBar.open(`Email is required for name : '${el.lastName}'`, "Close", { duration: 4000 })
+      //   return;
+      // }
+      // if (!el.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+      //   this.snackBar.open(`Invalid email : '${el.email}'`, "Close", { duration: 4000 })
+      //   return;
+      // }
     };
 
     this.api.saveInvitation(data).subscribe(() => {
