@@ -7,9 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
-// const REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
-// const REGISTERED = 'Ευχαριστούμε !';
-
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
@@ -38,9 +35,6 @@ export class AcceptInvitationComponent implements OnInit {
 
   maxChildren = 10;
   minChildren = 0;
-
-  REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
-  REGISTERED = 'Ευχαριστούμε!';
 
   constructor(private translateService: TranslateService,
     private route: ActivatedRoute, private api: ApiService,
@@ -91,7 +85,7 @@ export class AcceptInvitationComponent implements OnInit {
         .subscribe((result) => {
           this.invitation = result;
           this.isRegisterActivated = false;
-          this.registrationText = this.REGISTERED;
+          this.registrationText = this.translateService.instant('rsvp.butttonAccepted');
           this.snackBar.open("Successfully registered!", "Close", { duration: 2000 })
         });
     }
