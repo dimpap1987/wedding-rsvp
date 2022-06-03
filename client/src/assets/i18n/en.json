@@ -1,28 +1,30 @@
 {
     "wedding": {
-        "p1": "Θα είναι μεγάλη χαρά για εμάς να παρευρεθείτε στον γάμο μας που θα γίνει",
-        "dateWedding": "Σάββατο 2 Ιουλίου 2022",
-        "families": "Οικογένειες",
-        "familyNames": "Φώτιου & Φωτεινής Λαφιατόγλου — Χρήστου Κανελλόπουλου",
-        "bestMen": "Κουμπάροι",
-        "bestMenNames": "Δέσποινα Χαριτάκη — Πολυχρόνης Αλιπράντης",
-        "place": "Κτήμα Βέλλη",
-        "location": "Πυθαγόρα 58, Κορωπί 19400",
-        "afterWedding": "Μετά το μυστήριο ακολουθεί δεξίωση στον ίδιο χώρο."
+        "p1": "With great joy we invite you to join us at our marriage which will take place",
+        "dateWedding": "on Saturday, July 2, 2022",
+        "church": "St. Nicholas Chapel, Ktima Velli",
+        "families": "Families",
+        "familyNames": "Fotios & Foteini Lafiatoglou — Christos Kanellopoulos",
+        "bestMen": "Maid of honour & Best man",
+        "bestMenNames": "Despoina Charitaki — Polychronis Aliprantis",
+        "place": "Ktima Velli",
+        "location": "Pythagora 58, Koropi, 19400",
+        "afterWedding": "To be followed by a celebration of food, dancing and laughter!"
     },
     "footer": {
-        "contactMessage": "Τρόποι Επικοινωνίας",
-        "nick": "Νίκος",
-        "giota": "Γιώτα",
-        "ibanMessage": "Προαιρετική λίστα γάμου Τράπεζα Πειραιώς"
+        "contactMessage": "Contact us",
+        "nick": "Nikos",
+        "giota": "Giota",
+        "ibanMessage": "Please know that your presence on our special day is the greatest present of all! \nHowever, if you do wish to celebrate with a gift, a contribution towards our wishing well would be warmly appreciated.",
+        "iban": "Bank account - IBAN: GR19 0171 6680 0066 6810 8635 803"
     },
     "rsvp":{
-        "requestMessage":"Παρακαλούμε ενημερώσετε μας για την παρουσία σας έως τις 10 Ιουνίου 2022",
-        "acceptedMessage":"Ευχαριστούμε πολύ για την παρουσία σας!",
-        "adults": "Ενήλικες",
-        "children": "Ανήλικοι",
-        "butttonPending":"ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!",
-        "butttonAccepted":"Ευχαριστούμε!",
-        "mandatory":"Το πεδίο είναι υποχρεωτικό"
+        "requestMessage":"your reply is kindly requested by the 10th of June 2022",
+        "acceptedMessage":"Thank you for accepting our invitation!",
+        "adults": "Adults",
+        "children": "Children",
+        "butttonPending":"Wouldn't miss it for the world",
+        "butttonAccepted":"Thank you!",
+        "mandatory":"Required field"
     }
 }
