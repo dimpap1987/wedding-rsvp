@@ -4,29 +4,26 @@
         <div class="d-flex align-items-center justify-content-center" style="background-color: #f7f6ef;">
 
             <p *ngIf="!isRegisterActivated" class="pb-2">
-                <span style="font-size:19px;color:#9e728c;">
-                    <strong>{{invitation.lastName}}</strong>,
-                    Ευχαριστούμε πολύ για την παρουσία σας !</span>
+                <span style="font-size:19px;color:#9e728c;">{{'rsvp.acceptedMessage' | translate}}</span>
             </p>
 
             <form [formGroup]="_form" (ngSubmit)="register()" *ngIf="isRegisterActivated" class="w-75">
 
                 <p class="pb-2">
                     <span style="font-size:16px;color:#9e728c;">
-                        Παρακαλούμε ενημερώσετε μας για την παρουσία σας
-                        έως τις 10 Ιουνίου 2022 </span>
+                        {{'rsvp.requestMessage' | translate}} </span>
                 </p>
 
                 <div class="d-flex flex-wrap justify-content-center align-items-center p-2">
 
                     <!-- Adults -->
                     <mat-form-field class="example-full-width p-1 w-50" appearance="outline">
-                        <mat-label>Ενήλικες</mat-label>
+                        <mat-label>{{'rsvp.adults' | translate}}</mat-label>
                         <input type="number" matInput formControlName="numberOfAdults" placeholder="Ενήλικες"
                             [min]="minAdults" [max]="maxAdults" [errorStateMatcher]="matcher">
                         <mat-error
                             *ngIf="_form.get('numberOfAdults')?.errors && _form.get('numberOfAdults')?.hasError('required')">
-                            Το πεδίο είναι <strong>υποχρεωτικό</strong>
+                            <strong> {{'rsvp.mandatory' | translate}}</strong>
                         </mat-error>
                         <mat-error
                             *ngIf="_form.get('numberOfAdults')?.errors && _form.get('numberOfAdults')?.hasError('min')">
@@ -40,7 +37,7 @@
 
                     <!-- Children -->
                     <mat-form-field class="example-full-width p-1 w-50" appearance="outline">
-                        <mat-label>Ανήλικοι</mat-label>
+                        <mat-label>{{'rsvp.children' | translate}}</mat-label>
                         <input type="number" matInput formControlName="numberOfChildren" placeholder="Ανήλικοι"
                             [min]="minChildren" [max]="maxChildren" [errorStateMatcher]="matcher">
                         <mat-error

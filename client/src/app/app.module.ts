@@ -1,5 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -37,6 +37,9 @@ import { WeddingComponent } from './components/wedding/wedding.component';
 import { MatTableResponsiveModule } from './directives/mat-table-responsive.module';
 import { HttpConfigInterceptor } from './interceptors/httpconfig.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -78,7 +81,15 @@ import { FooterComponent } from './components/footer/footer.component';
     MatSortModule,
     GoogleMapsModule,
     ClipboardModule,
-    MatTableResponsiveModule
+    MatTableResponsiveModule,
+    MatSelectModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (http: HttpClient) => { return new TranslateHttpLoader(http, './assets/i18n/', '.json'); },
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }],
   bootstrap: [AppComponent]

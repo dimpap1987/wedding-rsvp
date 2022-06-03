@@ -3,11 +3,12 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Valida
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
 
-const REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
-const REGISTERED = 'Ευχαριστούμε !';
+// const REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
+// const REGISTERED = 'Ευχαριστούμε !';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -29,7 +30,7 @@ export class AcceptInvitationComponent implements OnInit {
   _form: FormGroup;
 
   isRegisterActivated: boolean = true;
-  isValid:boolean;
+  isValid: boolean;
   registrationText!: string;
 
   maxAdults = 10;
@@ -38,7 +39,13 @@ export class AcceptInvitationComponent implements OnInit {
   maxChildren = 10;
   minChildren = 0;
 
-  constructor(private route: ActivatedRoute, private api: ApiService, private snackBar: MatSnackBar, private _fb: FormBuilder) {
+  REGISTER = 'ΘΑ ΕΙΜΑΙ ΚΑΙ ΕΓΩ ΕΚΕΙ!';
+  REGISTERED = 'Ευχαριστούμε!';
+
+  constructor(private translateService: TranslateService,
+    private route: ActivatedRoute, private api: ApiService,
+    private snackBar: MatSnackBar, private _fb: FormBuilder) {
+
     this.route.params.subscribe(uuid => {
       this.uuidToken = uuid;
     });
@@ -62,7 +69,8 @@ export class AcceptInvitationComponent implements OnInit {
       this.invitation = inv;
       this.isValid = true;
       this.isRegisterActivated = !this.invitation?.registered
-      this.registrationText = this.invitation?.registered ? REGISTERED : REGISTER;
+      this.registrationText = this.invitation?.registered ? this.translateService.instant('rsvp.butttonAccepted') :
+        this.translateService.instant('rsvp.butttonPending');
 
       if (this.invitation?.registered) {
         this._form.patchValue({
@@ -83,7 +91,7 @@ export class AcceptInvitationComponent implements OnInit {
         .subscribe((result) => {
           this.invitation = result;
           this.isRegisterActivated = false;
-          this.registrationText = REGISTERED;
+          this.registrationText = this.REGISTERED;
           this.snackBar.open("Successfully registered!", "Close", { duration: 2000 })
         });
     }
