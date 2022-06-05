@@ -32,8 +32,9 @@ router.post("/", async (req, res) => {
         const invites = req.body?.map(element => {
             return {
                 uuid: uuidv4(),
-                lastName: element?.lastName,
-                email: element?.email
+                lastName: element.lastName,
+                // email: element.email,
+                language: element.language
                 // mobile: element?.mobile
             }
         });

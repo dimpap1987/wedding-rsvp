@@ -15,6 +15,11 @@ const invitationSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    language: {
+        type: String,
+        required: true,
+        default: 'gr'
+    },
     mobile: {
         type: Number,
         required: false
