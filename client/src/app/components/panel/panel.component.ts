@@ -18,7 +18,7 @@ import { QrcodeComponent } from '../qrcode/qrcode.component';
 export class PanelComponent implements OnInit {
 
   invitations: Invintation[] = [];
-  displayedColumns: string[] = ['select', 'index', 'name', 'email', 'registered', 'emailSent', 'qrcode', 'adults', 'children', 'actions'];
+  displayedColumns: string[] = ['select', 'index', 'name', 'language', 'registered', 'adults', 'children', 'actions'];
   displayedTotalColumns = ['totalAmountTitle', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'emptyFooter', 'totalAdults', 'totalChildren', 'emptyFooter'];
 
   dataSource = new MatTableDataSource<Invintation>();

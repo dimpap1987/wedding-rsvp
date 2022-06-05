@@ -40,6 +40,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatSelectModule } from '@angular/material/select';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { MatSelectModule } from '@angular/material/select';
     ClipboardModule,
     MatTableResponsiveModule,
     MatSelectModule,
+    MatButtonToggleModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

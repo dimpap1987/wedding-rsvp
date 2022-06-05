@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { map, Observable, tap } from 'rxjs';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-wedding',
@@ -25,7 +26,8 @@ export class WeddingComponent implements OnInit {
   ];
   selectedLang = 'gr';
 
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: TranslateService,
+    private utilService: UtilsService) {
     this.translateService.addLangs(this.languages.map(l => l.value));
     this.translateService.setDefaultLang(this.languages[0].value);
   }
@@ -38,6 +40,8 @@ export class WeddingComponent implements OnInit {
       this.translateService.use(this.languages[1].value);
       this.selectedLang = this.languages[1].value;
     }
+
+    this.utilService.language$.subscribe(language => this.selectedLang = language)
   }
 
   onChange(lang: string) {

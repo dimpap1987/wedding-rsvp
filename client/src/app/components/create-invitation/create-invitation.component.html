@@ -9,10 +9,17 @@
                         </mat-form-field>
                     </td>
                     <td>
+                        <mat-button-toggle-group name="language" aria-label="Language" formControlName='language'
+                        style="margin-bottom: 5px;">
+                            <mat-button-toggle value="gr" checked="true">Gr</mat-button-toggle>
+                            <mat-button-toggle value="en">En</mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </td>
+                    <!-- <td>
                         <mat-form-field class="form-element pr-2">
                             <input matInput placeholder="email" formControlName="email">
                         </mat-form-field>
-                    </td>
+                    </td> -->
                     <td>
                         <button (click)="_removeRow(i)" type="button" mat-button color="primary" matTooltip="Delete"
                             [matTooltipPosition]="'below'">

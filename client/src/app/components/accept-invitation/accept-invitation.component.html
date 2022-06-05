@@ -55,7 +55,8 @@
                     </mat-form-field>
                 </div>
                 <div class="pt-2">
-                    <app-button [buttonDisabled]="!isRegisterActivated" [text]="registrationText"></app-button>
+                    <app-button *ngIf="!invitation?.registered" [buttonDisabled]="!isRegisterActivated" text="{{'rsvp.butttonPending' | translate}}"></app-button>
+                    <app-button *ngIf="invitation?.registered" [buttonDisabled]="!isRegisterActivated" text="{{'rsvp.butttonAccepted' | translate}}"></app-button>
                 </div>
             </form>
         </div>

@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Invintation } from 'src/app/interfaces/invitation.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -30,15 +31,16 @@ export class AcceptInvitationComponent implements OnInit {
   isValid: boolean;
   registrationText!: string;
 
-  maxAdults = 10;
+  maxAdults = 20;
   minAdults = 1;
 
-  maxChildren = 10;
+  maxChildren = 20;
   minChildren = 0;
 
   constructor(private translateService: TranslateService,
     private route: ActivatedRoute, private api: ApiService,
-    private snackBar: MatSnackBar, private _fb: FormBuilder) {
+    private snackBar: MatSnackBar, private _fb: FormBuilder,
+    private utilService: UtilsService) {
 
     this.route.params.subscribe(uuid => {
       this.uuidToken = uuid;
@@ -61,10 +63,13 @@ export class AcceptInvitationComponent implements OnInit {
         return;
       }
       this.invitation = inv;
+      this.translateService.use(this.invitation.language as string);
+      this.utilService.changeLanguage(this.invitation.language as string);
       this.isValid = true;
       this.isRegisterActivated = !this.invitation?.registered
-      this.registrationText = this.invitation?.registered ? this.translateService.instant('rsvp.butttonAccepted') :
-        this.translateService.instant('rsvp.butttonPending');
+      // this.registrationText = this.invitation?.registered ?
+      //   this.translateService.instant('rsvp.butttonAccepted') :
+      //   this.translateService.instant('rsvp.butttonPending');
 
       if (this.invitation?.registered) {
         this._form.patchValue({
@@ -85,7 +90,7 @@ export class AcceptInvitationComponent implements OnInit {
         .subscribe((result) => {
           this.invitation = result;
           this.isRegisterActivated = false;
-          this.registrationText = this.translateService.instant('rsvp.butttonAccepted');
+          // this.registrationText = this.translateService.instant('rsvp.butttonAccepted');
           this.snackBar.open("Successfully registered!", "Close", { duration: 2000 })
         });
     }

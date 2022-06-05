@@ -24,9 +24,10 @@ export class CreateInvitationComponent implements OnInit {
     this._form = this._fb.group({
       data: this._fb.array([
         this._fb.group({
-          'email': [], //validator merge email & mobile
-          'mobile': [],
+          // 'email': [], //validator merge email & mobile
+          // 'mobile': [],
           'lastName': [],
+          'language': []
         })
       ])
     });
@@ -49,6 +50,9 @@ export class CreateInvitationComponent implements OnInit {
         this.snackBar.open(`'Name' is required`, "Close", { duration: 4000 })
         return;
       }
+      if (!el.language) {
+        el.language = 'gr'
+      }
       // if (!el.email) {
       //   this.snackBar.open(`Email is required for name : '${el.lastName}'`, "Close", { duration: 4000 })
       //   return;
@@ -69,9 +73,10 @@ export class CreateInvitationComponent implements OnInit {
     const formArray: FormArray = this._form.get("data") as FormArray;
 
     const form = this._fb.group({
-      'email': [], //validator merge email & mobile
-      'mobile': [],
+      // 'email': [], //validator merge email & mobile
+      // 'mobile': [],
       'lastName': [],
+      'language': []
     });
 
     formArray.push(form);

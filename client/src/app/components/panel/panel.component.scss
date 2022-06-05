@@ -11,6 +11,7 @@ th {
 
 th.mat-sort-header-sorted {
     color: black;
+    margin-left: 10px;
 }
 
 ::ng-deep .mat-sort-header-button {
@@ -22,4 +23,9 @@ td.actions {
     padding: 16px 0;
     /* row border */
     border-left: 1px solid lightsteelblue;
+}
+
+::ng-deep .mat-sort-header-container{
+    display: flex;
+    justify-content: center;
 }
